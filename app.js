@@ -113,7 +113,11 @@ app.get("/posts/:name",function(req,res){
 });
 
 app.get("/login",function(req,res){
-  res.redirect("/compose");
+  if(req.isAuthenticated()){
+    res.redirect("/compose");
+  } else {
+    res.render("login");
+  }
 });
 
 
