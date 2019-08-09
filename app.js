@@ -81,16 +81,7 @@ app.post("/compose",function(req,res) {
   input.save();
   res.redirect("/");
 });
-app.post("/register",function(req,res){
-  User.register({username:req.body.username},req.body.password,function(err,user){
-    if(err) {console.log(err);res.send("error");}
-    else {
-      passport.authenticate("local")(req,res,function(){
-        res.send("success!");
-      });
-    }
-  });
-});
+
 
 app.post("/login",function(req,res){
   const user = new User({
@@ -120,9 +111,7 @@ app.get("/posts/:name",function(req,res){
   //   }
   // });
 });
-app.get("/register",function(req,res){
-  res.render("register");
-});
+
 app.get("/login",function(req,res){
   res.render("login");
 });
