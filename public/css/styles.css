@@ -20,7 +20,7 @@
 }
 
 .footer {
-	position: absolute;
+	position:fixed;
 	text-align: center;
 	bottom: 0;
 	width: 100%;
@@ -30,6 +30,46 @@
 
 .footer p {
 	margin-top: 25px;
-	font-size: 12px;
+	font-size: 25px;
   color: #fff;
+}
+
+.add {
+  margin-top:1.5rem;
+}
+
+.nav {
+  font-size: 20px;
+}
+h1 {
+  font-family: 'Amatic SC', cursive;
+  font-size:80px;
+
+  display: inline-flex;
+  margin-left:46%;
+  /*
+  margin-left:auto;
+  margin-right:auto; */
+}
+
+
+
+
+
+
+#bell {
+  width:30px;
+  height:30px;
+}
+
+#test {
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+}
+#testimonials {
+  text-align: center;
+  background-color: #ef8172;
+  color: #fff;
+  
 }

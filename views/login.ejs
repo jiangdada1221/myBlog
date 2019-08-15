@@ -32,6 +32,13 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet">
+    <script type="text/javascript">
+      var login = <%= status %>;
+      if(login){
+        alert("you have been authorized!");
+        window.location='/';
+      }
+    </script>
   </head>
   <body class="text-center">
     <form class="form-signin" action="/login" method="post">

@@ -1,0 +1,247 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#title {
+  background-color: #ff4c68;
+  color: #fff;
+}
+
+h1 {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 3.5rem;
+  list-style: 1.5;
+}
+
+.container-fluid {
+  padding: 5% 15% 8% 15%;
+}
+
+.navbar {
+  padding-left: 0;
+  padding-bottom: 3rem;
+}
+
+.navbar-brand {
+  font-family: 'Ubuntu';
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.nav-item {
+  padding: 0 18px;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+.download1 {
+  margin: 5% 3% 0 3%;
+}
+
+.titleImage {
+  width: 60%;
+  transform: rotate(25deg);
+  margin-left: 13%;
+  position: absolute;
+}
+
+/* middle */
+#features {
+  text-align: center;
+  padding: 7% 15%;
+  position: relative;
+}
+
+.h {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.pInFeature {
+  color: #8f8f8f;
+}
+
+.icon2 {
+  color: #ef8172;
+  /* margin:0 50%; */
+  font-size: 45px;
+  margin-top: 8%;
+}
+
+.icon2:hover {
+  color: #bb1542;
+}
+
+/* .con2 {
+  padding-left: 10%;
+  padding-right:10%;
+
+} */
+/* testimonials */
+
+
+h2 {
+  line-height: 2;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 160%;
+}
+
+.test-image {
+  width: 15%;
+  border-radius: 100%;
+  margin: 20px;
+}
+
+#press {
+  background-color: #ef8172;
+  margin: 0;
+  text-align: center;
+}
+
+.press-image {
+  width: 13%;
+  /* margin:0 2%; */
+  margin: 2rem 1.2rem;
+}
+
+.carousel-item {
+  padding: 6% 16%;
+  height: 31rem;
+}
+
+#pricing {
+  padding: 100px;
+  text-align: center;
+}
+
+.pc {
+  padding: 3% 2%;
+}
+
+@media (max-width: 1085px) {
+  .titleImage {
+    position: static;
+    transform: rotate(0);
+    margin: 20px auto 0 auto;
+  }
+
+  #title {
+    text-align: center;
+  }
+}
+
+@media (max-width:510px) {
+  h1 {
+    font-size: 40px;
+  }
+
+  .download1 {
+    margin: 5% 1% 0 1%;
+  }
+}
+
+/* lastpart */
+#cta {
+  background-color: #ff4c68;
+  padding: 5% 15%;
+  text-align: center;
+}
+
+.lastH {
+  font-family: 'Montserrat-Black', sans-serif;
+  color: #fff;
+  margin-bottom: 5%;
+  font-weight: 900;
+}
+
+#footer {
+  background-color: #fff;
+  text-align: center;
+}
+
+.footer-icon {
+  margin: 7% 1% 2% 1%;
+}
+
+.lastP {
+  color: grey;
+}
+
+#testimonials {
+  text-align: center;
+  background-color: #ef8172;
+
+  color: #fff;
+}
+
+.item2 {
+  background-image:url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1637140314,404824954&fm=26&gp=0.jpg');
+
+}
+
+.item1 {
+  background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565789132966&di=0985eb6f9d2ef1a567e5e2d69e1b67aa&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F038f49358956df0a801219c775a9f15.gif')
+}
+.item3 {
+  background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1566387048&di=d9a969922bdc61946eb795c309fb2fe8&imgtype=jpg&er=1&src=http%3A%2F%2Fs13.sinaimg.cn%2Fmw690%2F002BRswLzy6WN1u5ZVybc%26amp%3B690');
+}
+.item3-text {
+  color:black;
+  font-style: oblique;
+  font-size:25px;
+}
+.item4 {
+  background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565793274652&di=b515f75fe306b6d09c22c1ab82ab3b7e&imgtype=0&src=http%3A%2F%2Fs2.sinaimg.cn%2Fbmiddle%2F4a4a795ad55d9fdc63301');
+}
+
+.item4-text {
+  font-size:25px;
+  font-weight:bold;
+}
+.item5 {
+  background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565796491443&di=f7797b1722110e1975598c7576f5801c&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fblog%2F201312%2F22%2F20131222063939_HaQG8.gif');
+}
+.item5-text {
+  font-size:25px;
+  font-style:italic;
+  color:white;
+}
+
+.item6 {
+  background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565796579062&di=ab54cc4782c25d043bce2d3a9e540dec&imgtype=0&src=http%3A%2F%2Fimages.missyuan.com%2Fattachments%2Fday_081007%2F20081007_0c04361b45e87bb963c9j6qvTSBWMCQJ.gif');
+}
+.item6-text {
+  color:#4f81c7;
+  font-size:25px;
+  font-style: oblique;
+}
+.item7 {
+
+}
+
+
+
+.item8 {
+  background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565887282257&di=d3eac238dd9a4230c2f8d4d343ca1060&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201302%2F19%2F20130219133015_iPWua.thumb.700_0.gif');
+}
+.item8-text {
+  color:black;
+  font-size:25px;
+  font-style:italic;
+}
+
+.item9 {
+  background-image:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565887540057&di=4ae32e4aff80dff411c0ee97c53ffb15&imgtype=0&src=http%3A%2F%2Fs1.sinaimg.cn%2Fbmiddle%2F626b1ddax7ac521e0b740%26690');
+}
+.item9-text {
+  color:black;
+  font-size:25px;
+  font-style:oblique;
+}

@@ -1,0 +1,21 @@
+<%- include("partial/header") -%>
+<script type="text/javascript">
+  function changeAction(uri){
+    document.getElementById('form').setAttribute('action',uri);
+  }
+</script>
+<form id="form" action="/uploads/add" method="post">
+  <div class="form-group">
+      <label for="title">Picture URL</label>
+      <input class="form-control" id="title" type="text" name="uri" >
+      <input type="hidden" name="title" value="<%=title%>">
+  </div>
+  <%imgs.forEach(function(img){%>
+    <div class="" style="display:flex;">
+    <p ><%=img%></p>
+    <button class="btn btn-danger" type="submit" name="deleteUri" onclick="changeAction('/deleteUri')" value='<%=img%>'>Delete </button>
+    </div>
+  <%});%>
+  <button class="btn btn-primary" type="submit" name="button" onclick="changeAction('/uploads/add')">Add</button>
+  <button class="btn btn-primary" type="button" onclick="window.location='/posts/<%=title%>'">Back</button>
+</form>

@@ -1,6 +1,12 @@
 //jshint esversion:6
 require('dotenv').config();
 const session = require('express-session');
+const path = require("path");
+const crypto=require("crypto");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
+const methodOverride = require("method-override");
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const express = require("express");
@@ -8,12 +14,14 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require('mongoose');
-
-mongoose.connect("mongodb+srv://Yuepeng:jyp267366@cluster0-fxj1l.mongodb.net/blogDB",{ useNewUrlParser: true });
+const mongoURI = "mongodb+srv://Yuepeng:jyp267366@cluster0-fxj1l.mongodb.net/blogDB";
+// const mongoURI = 'mongodb://localhost:27017/blogDB';
+const conn = mongoose.createConnection(mongoURI,{useNewUrlParser: true});
+mongoose.connect(mongoURI,{ useNewUrlParser: true });
 // mongoose.connect("mongodb://localhost:27017/testUser",{ useNewUrlParser: true });
 mongoose.set('useCreateIndex', true);
-const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
-const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
+const homeStartingContent = "耗时一礼拜，总算搭建好个人网站的框架，满满的成就感 will be updated if I have time";
+const aboutContent = "Will be updated later";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
 const app = express();
@@ -29,9 +37,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 const composeSchema = new mongoose.Schema({
   title:String,
-  body:String
+  body:String,
+  img:[]
 });
 
 const userSchema = new mongoose.Schema({
@@ -51,6 +61,9 @@ app.get("/",function(req,res) {
   Compose.find({},function(err,results){
     res.render("home",{p1:homeStartingContent,posts:results});
   });
+});
+app.get("/upload",function(req,res){
+  res.render("upload");
 });
 
 app.get("/contact",function(req,res) {
@@ -73,10 +86,11 @@ app.get("/compose",function(req,res) {
 app.post("/compose",function(req,res) {
 
   let title =req.body.pushTitle;
-  console.log(title);
+
   const input = new Compose({
     title:title,
-    body:req.body.pushText
+    body:req.body.pushText,
+    img:[]
   });
   input.save();
   res.redirect("/");
@@ -88,12 +102,12 @@ app.post("/login",function(req,res){
     username:req.body.username,
     password:req.body.password
   });
-  console.log(user);
+
   req.login(user,function(err){
     if(err){console.log(err);}
     else {
       passport.authenticate("local")(req,res,function(){
-        res.redirect("/compose");
+        res.redirect("/");
       });
     }
   });
@@ -101,9 +115,12 @@ app.post("/login",function(req,res){
 
 app.get("/posts/:name",function(req,res){
   let name = req.params.name;
-  console.log(name);
+
   Compose.findOne({title:name},function(err,results){
-    res.render("post",{title:name,body:results.body});
+    if(results){
+    res.render("post",{title:name,body:results.body,imgs:results.img});}else {
+      res.redirect("/");
+    }
   });
   // posts.forEach(function(element){
   //   if(_.lowerCase(element.title) === name){
@@ -111,22 +128,127 @@ app.get("/posts/:name",function(req,res){
   //   }
   // });
 });
-
-app.get("/login",function(req,res){
+app.get("/addmore",function(req,res){
   if(req.isAuthenticated()){
     res.redirect("/compose");
+  }else {
+    res.redirect("/login");
+  }
+});
+app.get("/login",function(req,res){
+  if(req.isAuthenticated()){
+
+    res.render("login",{status:true});
   } else {
-    res.render("login");
+    res.render("login",{status:false});
+  }
+});
+app.post("/delete",function(req,res){
+
+  let title = req.body.title;
+  let status = req.body.button;
+  if(req.isAuthenticated()){
+    if(status==='false'){
+    Compose.findOneAndDelete({title:title},function(err,results){
+      if(err) console.log(err);
+      else res.redirect("/");
+    });} else {
+      res.send("wrong???");
+    }
+  }else {
+    res.redirect("/login");
   }
 });
 
+// upload
+// let gfs;
+// conn.once("open",function(err){
+//   gfs=Grid(conn.db,mongoose.mongo);
+//   gfs.collection("uploads");
+//  });
+//
+//  const storage = new GridFsStorage({
+//   url: mongoURI,
+//   options:{useNewUrlParser:true},
+//   file: (req, file) => {
+//     return new Promise((resolve, reject) => {
+//       crypto.randomBytes(16, (err, buf) => {
+//         if (err) {
+//           return reject(err);
+//         }
+//         const filename = buf.toString('hex') + path.extname(file.originalname);
+//         const fileInfo = {
+//           filename: filename,
+//           bucketName: 'uploads' //should match collection name!
+//         };
+//         resolve(fileInfo);
+//       });
+//     });
+//   }
+// });
+//
+// const upload = multer({ storage });
+//
+// app.post("/upload",upload.single('file'),function(req,res){
+//   res.redirect("/");
+// });
 
 
+//upload Picture
+app.get("/upload/:title",function(req,res){
+  Compose.findOne({title:req.params.title},function(err,result){
+    if(result) res.render("uploads",{title:req.params.title,imgs:result.img});
+    else {
+      res.render("uploads",{title:req.params.title,imgs:[]});
+    }
+  });
+});
 
+app.post("/uploads/add",function(req,res){
+  let title = req.body.title;
+  let uri = req.body.uri;
+  console.log("this is triggered");
+  if(req.isAuthenticated()){
+    Compose.findOne({title:title},function(err,result){
+      if(result){
+      result.img.push(uri);
+      result.save();
+      res.redirect("/upload/"+title);}
+      else {
+        res.redirect("/");
+      }
+    });
+  }else {
+    res.redirect("/login");
+  }
+});
 
+app.post("/deleteUri",function(req,res){
+  let title = req.body.title;
+  let uri = req.body.deleteUri;
+  // console.log(req.body);
+  Compose.findOne({title:title},function(err,result){
+    if(err) console.log(err);
+    else {
+      if(result){
+        console.log(result);
+        result.img = result.img.filter(function(item){
+          return item != uri;
+        });
+        result.save();
+        res.redirect('/upload/'+title);
+      }else {
+        res.render("wrong request!");
+      }
+    }
 
+  });
+});
 
-
+// confession page
+app.get("/myWord",function(req,res){
+  res.render('confession');
+});
 
 
 

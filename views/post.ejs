@@ -1,9 +1,21 @@
 <%- include("partial/header") -%>
 <h1><%= title %></h1>
 <p><%= body %></p>
+<%imgs.forEach(function(img){ %>
+
+  <img src=<%=img%> alt="can not get img">
+<%});%>
 
 
-
-
+<br>
+<!-- <form class="" action="/uploadPicture" method="post" style="display:inline-block;">
+  <input type="hidden" name="title" value="<%= title %>">
+  <button class="btn btn-primary" type="submit">Add Picture</button>
+</form> -->
+<form class="" action="/delete" method="post">
+  <input type="hidden" name="title" value="<%= title %>">
+  <button class="btn btn-primary" type="button" name="none" onclick="window.location='/upload/<%=title%>'">Add Picture</button>
+  <button class="btn btn-primary" type="submit" name="button" value="false">Delete</button>
+</form>
 
 <%- include("partial/footer") -%>
