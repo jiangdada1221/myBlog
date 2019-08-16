@@ -13,11 +13,17 @@
   <link rel="stylesheet" href="/css/styles2.css">
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
   </head>
+
   <body>
+    <script type="text/javascript">
+    function play(){
+      var audio = new Audio('mp3.mp3');
+      audio.play();}
+    </script>
   <nav class="navbar navbar-default" style="background-color:#f0d78c">
     <div class="container">
       <div class="navbar-header">
-        <p class="navbar-brand">想说的话</p>
+        <p class="navbar-brand">words to say</p>
       </div>
         <ul class="nav navbar-nav navbar-right">
           <!-- 6 -->
@@ -34,7 +40,7 @@
     <div id="carousel1" class="carousel slide" data-pause="true">
       <div class="carousel-inner item1">
         <div class="carousel-item active">
-          <h1>考虑了很久，纠结了很久</h1>
+          <h1>纠结了很久</h1>
           <h1>不知道什么时候我才有勇气</h1>
           <h1>告诉你这些话:</h1>
         </div>
@@ -117,7 +123,7 @@
         <span class="carousel-control-prev-icon"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next" href="#carousel1" role="button" data-slide="next">
+      <a class="carousel-control-next" href="#carousel1" role="button" data-slide="next" onclick="play();">
         <span class="carousel-control-next-icon"></span>
         <span class="sr-only">Next</span>
       </a>
