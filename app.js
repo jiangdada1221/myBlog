@@ -246,7 +246,7 @@ app.post("/deleteUri",function(req,res){
 });
 
 // confession page
-app.get("/myWord",function(req,res){
+app.get("/wor",function(req,res){
   res.render('confession');
 });
 
